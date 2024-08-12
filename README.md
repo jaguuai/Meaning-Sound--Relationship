@@ -72,6 +72,7 @@ Gürültü Oranı (Noise Ratio): Sinyal içindeki gürültü seviyesi.
 
 Daha sonrasında tüm bu ifadeeleri ayrı .py scriptlerinde uygun kütüphaneler ile çıkarıp csv dosyama ekledim.
 1-TimeDomainFtrs.py->2-FrequencyDomainFeatures.py->3-CepstralFeatures.py->4-StatisticalFtrs.py->5-TimeFrequency.py->6-AudioSegments.py
+Özellikleri bu şekilde ayrı scriptlerde aldım ki okunurluğu kolay olsun ve daha sonrasında yapacağım accuracy değerı yükseltme işlemlerinde ekleme çıkarmayı daha kolay şekilde yapabileyim.
 En son csv dosyamı kullanarak neural network kullanarak modelimi eğittim . -> neural.py
 Doğruluk Skoru: 0.8357142857142857
 Sınıflandırma Raporu:
