@@ -1,4 +1,4 @@
-# Meaning-Sound--Relationship
+# Meaning-Sound-Relationship
 Bu projede anne karnındaki bebeklerin konuşmayı ve dili bilmeden anlam çıkarması ve bazı müzıklerın bize sözsüz bir anlam ifade etmesi daha da genişletirssek seslerin hayvanlar ve tüm canlılar üzerinde ortak bir noktada yeri olabilir mi sorularının incelemek için başladım. 
 
 Projede IBM Watson API Text-to-Speech free olarak yararlandım.
