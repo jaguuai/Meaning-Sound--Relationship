@@ -47,8 +47,8 @@ data = {
 
 
 # authenticate
-api_key="rdcHNkNEt_DfTIok6R7cv54mn5-yuhSQ42IAiLtZ-8wW"
-url="https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/5bf6bed1-0636-48c7-95e4-a45c87fba1c2"
+api_key="****"
+url="*****"
 
 
 from ibm_watson import TextToSpeechV1
@@ -64,38 +64,66 @@ output_dir = 'Sounds'  # Ana dizin
 os.makedirs(output_dir, exist_ok=True)  # Klasörü oluştur, varsa hata vermez
 # Geçersiz karakterleri temizleme işlevi
 import re
-def sanitize_filename(filename):
-    return re.sub(r'[<>:"/\\|?*]', '_', filename)
-def save_audio_files(data):
-    for lang_code, words in data["Greeting Words"].items():
-        voices = data["Voices"].get(lang_code, [])
-        language_dir = os.path.join(output_dir, lang_code)
-        os.makedirs(language_dir, exist_ok=True)
+# "def sanitize_filename(filename):
+#     return re.sub(r'[<>:"/\\|?*]', '_', filename)"
+# "def save_audio_files(data):
+#     for lang_code, words in data["Greeting Words"].items():
+#         voices = data["Voices"].get(lang_code, [])
+#         language_dir = os.path.join(output_dir, lang_code)
+#         os.makedirs(language_dir, exist_ok=True)
         
-        for word_index, word in enumerate(words):
-            sanitized_word = sanitize_filename(word)
-            # Ses listesinin uzunluğu kadar döngü oluşturuluyor
-            for voice_index, voice in enumerate(voices):
-                audio_file_path = os.path.join(language_dir, f"{sanitized_word}_{voice}.wav")
-                try:
-                    response = tts.synthesize(
-                        text=word,
-                        voice=voice,
-                        accept='audio/wav'
-                    ).get_result()
+#         for word_index, word in enumerate(words):
+#             sanitized_word = sanitize_filename(word)
+#             # Ses listesinin uzunluğu kadar döngü oluşturuluyor
+#             for voice_index, voice in enumerate(voices):
+#                 audio_file_path = os.path.join(language_dir, f"{sanitized_word}_{voice}.wav")
+#                 try:
+#                     response = tts.synthesize(
+#                         text=word,
+#                         voice=voice,
+#                         accept='audio/wav'
+#                     ).get_result()
                     
-                    print(f"Response status code for '{word}' with voice '{voice}': {response.status_code}")
-                    if response.status_code == 200:
-                        if response.content:
-                            with open(audio_file_path, 'wb') as audio_file:
-                                audio_file.write(response.content)
-                            print(f"Audio file created: {audio_file_path}")
-                        else:
-                            print(f"No audio content for '{word}' with voice '{voice}'.")
-                    else:
-                        print(f"Failed to get audio for '{word}' with voice '{voice}'. Status code: {response.status_code}")
-                except Exception as e:
-                    print(f"Exception occurred for '{word}' with voice '{voice}': {e}")
+#                     print(f"Response status code for '{word}' with voice '{voice}': {response.status_code}")
+#                     if response.status_code == 200:
+#                         if response.content:
+#                             with open(audio_file_path, 'wb') as audio_file:
+#                                 audio_file.write(response.content)
+#                             print(f"Audio file created: {audio_file_path}")
+#                         else:
+#                             print(f"No audio content for '{word}' with voice '{voice}'.")
+#                     else:
+#                         print(f"Failed to get audio for '{word}' with voice '{voice}'. Status code: {response.status_code}")
+#                 except Exception as e:
+#                     print(f"Exception occurred for '{word}' with voice '{voice}': {e}")
 
-# Ses dosyalarını kaydetme
-save_audio_files(data)
+# # Ses dosyalarını kaydetme
+# save_audio_files(data)"
+
+import shutil
+
+# Kaynak klasör (sounds klasörünüz)
+source_folder = 'sounds'
+
+# Hedef klasör (Tüm wav dosyalarını toplamak için yeni bir klasör)
+destination_folder = 'all_sounds'
+
+# Hedef klasör yoksa oluştur
+os.makedirs(destination_folder, exist_ok=True)
+
+# Tüm alt klasörlerdeki wav dosyalarını topla
+for root, dirs, files in os.walk(source_folder):
+    for file in files:
+        if file.endswith('.wav'):
+            # Kaynak dosyanın tam yolu
+            source_file_path = os.path.join(root, file)
+            
+            # Aynı dosya adı varsa üzerine yazmamak için dosya adı değiştirme (opsiyonel)
+            new_file_name = f"{os.path.basename(root)}_{file}"
+            destination_file_path = os.path.join(destination_folder, new_file_name)
+            
+            # Dosyayı hedef klasöre kopyala
+            shutil.copy2(source_file_path, destination_file_path)
+            print(f"Kopyalandı: {destination_file_path}")
+
+print("Tüm dosyalar kopyalandı!")
